@@ -12,20 +12,23 @@ function read_teams_odds () {
     var q = require('C:/Users/TBANACH/AppData/Roaming/npm/node_modules/q');
     browser.driver.findElement(by.xpath('//*[@id="fscon"]/ul/li[5]')).click();
     browser.driver.findElement(by.css('.fs-table')).then(function (krowie) {
-        browser.driver.findElement(by.css('.odds-content')).then(function (tablica) {
-            tablica.findElements(by.css('.soccer.odds')).then(function (table) {
+            krowie.findElements(by.css('.soccer')).then(function (table) {
                 var table_objects = [];
                 for (i=1;i<table.length;i++) {
-                    browser.driver.findElement(by.css('#fs > div.odds-content > table:nth-child('+i+')')).getText().then(function (nazwa) {
-                        //var Nazwa_ligi = nazwa.findElement(by.css('.name')).getText();
-                        //var godzina_meczu = nazwa.findElement(by.css('.cell_ad.time')).getText();
+                    browser.driver.findElement(by.css('#fs > div > table:nth-child('+i+')')).then(function (nazwa) {
+                        var Nazwa_ligi = (nazwa.findElement(by.css('.name')).getText());
+
+                        var godzina_meczu = (nazwa.findElement(by.css('.cell_ad.time')).getInnerHtml());
                         //var nazwa_zespolu_HOME = nazwa.findElement(by.css('.cell_ab.team-home')).getText();
-                        //var nazwa_zespolu_AWAY = nazwa.findElement(by.css('.cell_ac.team-away')).getText();
-                        console.log(nazwa);
+                        // var nazwa_zespolu_AWAY = nazwa.findElement(by.css('.cell_ac.team-away')).getText();
+                        Nazwa_ligi.then(function (nameOfLeague) {
+                            godzina_meczu.then(function (hourOFmatch) {
+                                console.log(nameOfLeague + ' ' + hourOFmatch)
+                            });
+                        });
                     });
                 }
             });
-        });
     });
 };
 
