@@ -45,13 +45,91 @@ function read_teams_odds () {
                     nazwa.findElement(by.css('tbody')).then(function (tabelka) {
                         tabelka.findElements(by.css('tr')).then(function (wiersze) {
                             for (j=0;j<wiersze.length;j++){
-                                wiersze[j].findElements(by.css('td')).then(function (values) {
+                                wiersze[j].findElements(by.css('td.cell_ab.team-home')).then(function (values) {
+                                    var gino = [];
+                                    for (g=0;g<values.length;g++) {
+                                        gino.push(values[g].getText());
+                                    }
+                                        q.all(gino).then(function (value) {
+                                            console.log(value);
+                                        })
+                                })
+                                wiersze[j].findElements(by.css('td.cell_ac.team-away')).then(function (values) {
                                     var gino = [];
                                     for (g=0;g<values.length;g++) {
                                         gino.push(values[g].getText());
                                     }
                                     q.all(gino).then(function (value) {
                                         console.log(value);
+                                    })
+                                })
+                                wiersze[j].findElements(by.css('td.cell_ad.time')).then(function (values) {
+                                    var gino = [];
+                                    for (g=0;g<values.length;g++) {
+                                        gino.push(values[g].getText());
+                                    }
+                                    q.all(gino).then(function (value) {
+                                        console.log(value);
+                                    })
+                                })
+                                wiersze[j].findElements(by.css('td.cell_oa')).then(function (values) {
+                                    var gino = [];
+                                    for (g=0;g<values.length;g++) {
+                                        gino.push(values[g].getText());
+                                    }
+                                    q.all(gino).then(function (value) {
+                                        console.log(value);
+                                    })
+                                })
+                                wiersze[j].findElements(by.css('td.cell_ob')).then(function (values) {
+                                    var gino = [];
+                                    for (g=0;g<values.length;g++) {
+                                        gino.push(values[g].getText());
+                                    }
+                                    q.all(gino).then(function (value) {
+                                        console.log(value);
+                                    })
+                                })
+                                wiersze[j].findElements(by.css('td.cell_oc')).then(function (values) {
+                                    var gino = [];
+                                    for (g=0;g<values.length;g++) {
+                                        gino.push(values[g].getText());
+                                    }
+                                    q.all(gino).then(function (value) {
+                                        console.log(value);
+                                    })
+                                })
+                            }
+                        });
+                    });
+                });
+            }
+        });
+    });
+};
+
+
+function read_teams_odds4 () {
+    var q = require('C:/Users/TBANACH/AppData/Roaming/npm/node_modules/q');
+    browser.driver.findElement(by.xpath('//*[@id="fscon"]/ul/li[5]')).click();
+    browser.driver.findElement(by.css('.fs-table')).then(function (krowie) {
+        krowie.findElements(by.css('.soccer')).then(function (table) {
+            var table_objects = [];
+            for (i=1;i<table.length;i++) {
+                browser.driver.findElement(by.css('#fs > div > table:nth-child('+i+')')).then(function (nazwa) {
+                    var Nazwa_ligi = (nazwa.findElement(by.css('.name')).getText());
+                    nazwa.findElement(by.css('tbody')).then(function (tabelka) {
+                        tabelka.findElements(by.css('tr')).then(function (wiersze) {
+                            for (j=0;j<wiersze.length;j++){
+                                wiersze[j].findElements(by.css('td')).then(function (values) {
+                                    var gino = [];
+                                    for (g=0;g<values.length;g++) {
+                                        values[g].findElement(by.css('.padl')).then(function (druzyna) {
+                                            gino.push(druzyna[g].getText())
+                                        })
+                                    }
+                                    q.all(gino).then(function (qq) {
+                                        console.log(qq);
                                     })
                                 })
                             }
