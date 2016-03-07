@@ -33,7 +33,7 @@ function read_teams_odds2 () {
 };
 
 
-function read_teams_odds () {
+function read_teams_odds2 () {
     var q = require('C:/Users/TBANACH/AppData/Roaming/npm/node_modules/q');
     browser.driver.findElement(by.xpath('//*[@id="fscon"]/ul/li[5]')).click();
     browser.driver.findElement(by.css('.fs-table')).then(function (krowie) {
@@ -108,32 +108,39 @@ function read_teams_odds () {
     });
 };
 
+function DataObj() {
+    this.home = null;
+    this.away = null;
+    this.score = null;
+};
 
-function read_teams_odds4 () {
+function read_teams_odds () {
     var q = require('C:/Users/TBANACH/AppData/Roaming/npm/node_modules/q');
     browser.driver.findElement(by.xpath('//*[@id="fscon"]/ul/li[5]')).click();
     browser.driver.findElement(by.css('.fs-table')).then(function (krowie) {
         krowie.findElements(by.css('.soccer')).then(function (table) {
             var table_objects = [];
+            var data = [];
             for (i=1;i<table.length;i++) {
                 browser.driver.findElement(by.css('#fs > div > table:nth-child('+i+')')).then(function (nazwa) {
                     var Nazwa_ligi = (nazwa.findElement(by.css('.name')).getText());
                     nazwa.findElement(by.css('tbody')).then(function (tabelka) {
-                        tabelka.findElements(by.css('tr')).then(function (wiersze) {
+                        var zupa = tabelka.findElements(by.css('tr')).then(function (wiersze) {
                             for (j=0;j<wiersze.length;j++){
-                                wiersze[j].findElements(by.css('td')).then(function (values) {
-                                    var gino = [];
+                                obj = new DataObj();
+                                wiersze[j].findElements(by.css('td.cell_ab.team-home')).then(function (values) {
                                     for (g=0;g<values.length;g++) {
-                                        values[g].findElement(by.css('.padl')).then(function (druzyna) {
-                                            gino.push(druzyna[g].getText())
-                                        })
+                                        obj.home = values[g].getText();
                                     }
-                                    q.all(gino).then(function (qq) {
-                                        console.log(qq);
-                                    })
+                                    table_objects.push(obj);
                                 })
+                                data.push(obj);
                             }
+                            return data;
                         });
+                        for (t=0;t<zupa.length;t++) {
+                            console.log(zupa[t].home)
+                        }
                     });
                 });
             }
