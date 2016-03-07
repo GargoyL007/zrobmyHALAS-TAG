@@ -109,43 +109,33 @@ function read_teams_odds2 () {
 };
 
 function DataObj() {
+    this.league_name = null;
     this.home = null;
     this.away = null;
-    this.score = null;
 };
 
 function read_teams_odds () {
     var q = require('C:/Users/TBANACH/AppData/Roaming/npm/node_modules/q');
+    var table_objects = [];
+    var data = [];
+    obj = new DataObj();
     browser.driver.findElement(by.xpath('//*[@id="fscon"]/ul/li[5]')).click();
-    browser.driver.findElement(by.css('.fs-table')).then(function (krowie) {
-        krowie.findElements(by.css('.soccer')).then(function (table) {
-            var table_objects = [];
-            var data = [];
-            for (i=1;i<table.length;i++) {
-                browser.driver.findElement(by.css('#fs > div > table:nth-child('+i+')')).then(function (nazwa) {
-                    var Nazwa_ligi = (nazwa.findElement(by.css('.name')).getText());
-                    nazwa.findElement(by.css('tbody')).then(function (tabelka) {
-                        var zupa = tabelka.findElements(by.css('tr')).then(function (wiersze) {
-                            for (j=0;j<wiersze.length;j++){
-                                obj = new DataObj();
-                                wiersze[j].findElements(by.css('td.cell_ab.team-home')).then(function (values) {
-                                    for (g=0;g<values.length;g++) {
-                                        obj.home = values[g].getText();
-                                    }
-                                    table_objects.push(obj);
+    browser.driver.findElement(by.css('.fs-table')).then(function (krok1) {
+            krok1.findElements(by.css('.soccer')).then(function (table) {
+                for (i=0;table.length>i;i++){
+                    obj.league_name=table[i].findElement(by.css('.country.left')).getText();
+                    table[i].findElement(by.css('tbody')).then(function (wartoscsrodek) {
+                        wartoscsrodek.findElements(by.css('tr')).then(function (vartosc) {
+                            for (y=0;y<vartosc.length;y++) {
+                                vartosc[y].findElement(by.css('.cell_ab.team-home')).getText().then(function (vartosciowy) {
+                                console.log(obj.league_name+ ' ' + vartosciowy)
                                 })
-                                data.push(obj);
                             }
-                            return data;
-                        });
-                        for (t=0;t<zupa.length;t++) {
-                            console.log(zupa[t].home)
-                        }
-                    });
-                });
-            }
-        });
-    });
+                        })
+                    })
+                }
+            });
+        })
 };
 
 function read_teams_scores () {
