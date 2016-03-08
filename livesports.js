@@ -14,7 +14,4 @@ describe('Scrapper kursow', function() {
     it('read data', function (){
         func.czytanie_druzyn();
     });
-    it('collect data', function (){
-        func.czytanie_druzyn();
-    });
 });

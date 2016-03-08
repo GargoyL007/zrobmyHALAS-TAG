@@ -33,7 +33,7 @@ function read_teams_odds2 () {
 };
 
 
-function read_teams_odds2 () {
+function read_teams_odds4 () {
     var q = require('C:/Users/TBANACH/AppData/Roaming/npm/node_modules/q');
     browser.driver.findElement(by.xpath('//*[@id="fscon"]/ul/li[5]')).click();
     browser.driver.findElement(by.css('.fs-table')).then(function (krowie) {
@@ -116,26 +116,32 @@ function DataObj() {
 
 function read_teams_odds () {
     var q = require('C:/Users/TBANACH/AppData/Roaming/npm/node_modules/q');
-    var table_objects = [];
-    var data = [];
-    obj = new DataObj();
+    var Data = new Array();
+    var obj = new DataObj();
     browser.driver.findElement(by.xpath('//*[@id="fscon"]/ul/li[5]')).click();
-    browser.driver.findElement(by.css('.fs-table')).then(function (krok1) {
-            krok1.findElements(by.css('.soccer')).then(function (table) {
-                for (i=0;table.length>i;i++){
-                    obj.league_name=table[i].findElement(by.css('.country.left')).getText();
-                    table[i].findElement(by.css('tbody')).then(function (wartoscsrodek) {
-                        wartoscsrodek.findElements(by.css('tr')).then(function (vartosc) {
-                            for (y=0;y<vartosc.length;y++) {
-                                vartosc[y].findElement(by.css('.cell_ab.team-home')).getText().then(function (vartosciowy) {
-                                console.log(obj.league_name+ ' ' + vartosciowy)
+    browser.driver.findElement(by.css('.content')).then(function () {
+        browser.driver.findElement(by.css('.flashscore')).then(function (step5) {
+             step5.findElement(by.css('.fs-table')).then(function (step7) {
+                 var dataa = step7.findElements(by.css('.soccer')).then(function (step9) {
+                    for (i=0;i>step9.length;i++) {
+                        var lll = i;
+                        step9[i].findElement(by.css('tbody')).then(function (aaa) {
+                            aaa.findElements(by.css('tr')).then(function (aaa2) {
+                                browser.driver.findElement(by.css('#fs > div.odds-content > table:nth-child('+ lll +') > thead > tr > td.head_ab.left.project-bonus-border > span.country.left > span.name')).getText().then(function (aaa) {
+                                    console.log(String(aaa))
                                 })
-                            }
+                                for(z=0;z<aaa2.length;z++){
+                                    aaa2[z].findElement(by.css('.cell_ad.time')).getText().then(function (aaa3) {
+                                        return aaa3
+                                    })
+                                }
                         })
-                    })
-                }
-            });
+                        })
+                    }
+                })
+            })
         })
+    })
 };
 
 function read_teams_scores () {
